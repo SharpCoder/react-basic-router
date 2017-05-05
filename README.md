@@ -3,7 +3,9 @@ A fast and minimal view router written in react which responds to hash navigatio
 
 ## Getting Started
 
-React basic router is just javascript, it can be webpacked or required as you like.
+React basic router is just javascript, it can be webpacked or required as you like. Find the npm package here: https://www.npmjs.com/package/react-basic-router
+
+This is how you can install it.
 
 ```bash
 npm install --save-dev react-basic-router
