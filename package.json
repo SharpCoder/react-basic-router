@@ -4,6 +4,8 @@
   "description": "A basic react router that uses hash state for navigation.",
   "main": "index.js",
   "scripts": {
+    "build": "babel ./src/index.jsx -o index.js",
+    "prepublish": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [

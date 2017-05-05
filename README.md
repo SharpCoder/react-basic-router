@@ -33,7 +33,6 @@ class App extends React.Component {
 ### Built With
 
 * babel-cli
-* makefile (weird, I know)
 
 
 ### Author
