@@ -3,12 +3,12 @@ A fast and minimal view router written in react which responds to hash navigatio
 
 ## Getting Started
 
-React basic router is just javascript, it can be webpacked or required as you like. Find the npm package here: https://www.npmjs.com/package/react-basic-router
+React basic router is just javascript, it can be webpacked or required as you like.
 
 This is how you can install it.
 
 ```bash
-npm install --save-dev react-basic-router
+npm install --save react-basic-router
 ```
 
 ## Example
@@ -20,15 +20,15 @@ import React from 'react';
 import { Router, Route, ErrorRoute } from 'react-basic-router';
 
 class App extends React.Component {
-	render() {
-		return(<div>
-			<Router>
-				<Route hash="#/" component={MainView} absolute />
-				<Route hash="#/about" component={About} title={"Hey look, I can pass props"} />
-				<ErrorRoute component={MissingFilePage} />
-			</Router>
-		</div>);
-	}
+  render() {
+    return(<div>
+      <Router>
+	<Route hash="#/" component={MainView} absolute />
+	<Route hash="#/about" component={About} title={"Hey look, I can pass props"} />
+	<ErrorRoute component={MissingFilePage} />
+      </Router>
+    </div>);
+  }
 }
 ```
 
@@ -45,7 +45,7 @@ class App extends React.Component {
 
 To build the project, run the following commands
 ```shell
-npm install --save-dev
+npm install
 npm install -g gulp
 gulp
 ```
