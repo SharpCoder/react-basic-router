@@ -46,7 +46,9 @@ class App extends React.Component {
 To build the project, run the following commands
 ```shell
 npm install --save-dev
+
 npm install -g gulp
+
 gulp
 ```
 
