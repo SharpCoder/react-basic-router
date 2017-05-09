@@ -20,6 +20,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+// Global constants
 var EventEmitter = require('events');
 var RouterEmitter = new EventEmitter();
 
@@ -76,6 +77,8 @@ var Router = function (_React$Component) {
 
   return Router;
 }(_react2.default.Component);
+
+exports.Router = Router;
 
 var Route = function (_React$Component2) {
   _inherits(Route, _React$Component2);
@@ -135,5 +138,4 @@ Route.propTypes = {
   component: _propTypes2.default.any.isRequired
 };
 
-exports.Router = Router;
 exports.Route = Route;
