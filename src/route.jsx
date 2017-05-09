@@ -14,8 +14,23 @@ class Route extends React.Component {
     RouterEmitter.removeListener('pagechanged', this.handlePageChange.bind(this));
   }
 
+  getBaseHash(hash) {
+    let isAbsolute = this.props.absolute;
+
+    if (isAbsolute === undefined || isAbsolute === null) {
+      isAbsolute = false;
+    }
+
+    if (hash.indexOf('?') >= 0 && !isAbsolute) {
+      hash = hash.substr(0, hash.indexOf('?'));
+    }
+
+    console.log(isAbsolute, hash);
+    return hash;
+  }
+
   handlePageChange(hash) {
-    let show = hash == this.props.hash;
+    let show = this.getBaseHash(hash) == this.getBaseHash(this.props.hash);
     if (show) {
       RouterEmitter.emit("pagefound");
     }
@@ -43,7 +58,8 @@ class Route extends React.Component {
 
 Route.propTypes = {
   hash: PropTypes.string.isRequired,
-  component: PropTypes.any.isRequired
+  component: PropTypes.any.isRequired,
+  absolute: PropTypes.bool
 };
 
 exports.Route = Route;

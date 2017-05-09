@@ -117,9 +117,25 @@ var Route = function (_React$Component2) {
       RouterEmitter.removeListener('pagechanged', this.handlePageChange.bind(this));
     }
   }, {
+    key: 'getBaseHash',
+    value: function getBaseHash(hash) {
+      var isAbsolute = this.props.absolute;
+
+      if (isAbsolute === undefined || isAbsolute === null) {
+        isAbsolute = false;
+      }
+
+      if (hash.indexOf('?') >= 0 && !isAbsolute) {
+        hash = hash.substr(0, hash.indexOf('?'));
+      }
+
+      console.log(isAbsolute, hash);
+      return hash;
+    }
+  }, {
     key: 'handlePageChange',
     value: function handlePageChange(hash) {
-      var show = hash == this.props.hash;
+      var show = this.getBaseHash(hash) == this.getBaseHash(this.props.hash);
       if (show) {
         RouterEmitter.emit("pagefound");
       }
@@ -152,23 +168,19 @@ var Route = function (_React$Component2) {
 
 Route.propTypes = {
   hash: _propTypes2.default.string.isRequired,
-  component: _propTypes2.default.any.isRequired
+  component: _propTypes2.default.any.isRequired,
+  absolute: _propTypes2.default.bool
 };
 
 exports.Route = Route;
 
-var ErrorRoute = function (_React$Component3) {
-  _inherits(ErrorRoute, _React$Component3);
+var ErrorRoute = function (_Route) {
+  _inherits(ErrorRoute, _Route);
 
   function ErrorRoute() {
     _classCallCheck(this, ErrorRoute);
 
-    var _this4 = _possibleConstructorReturn(this, (ErrorRoute.__proto__ || Object.getPrototypeOf(ErrorRoute)).call(this));
-
-    _this4.state = {
-      shouldShow: false
-    };
-    return _this4;
+    return _possibleConstructorReturn(this, (ErrorRoute.__proto__ || Object.getPrototypeOf(ErrorRoute)).apply(this, arguments));
   }
 
   _createClass(ErrorRoute, [{
@@ -195,19 +207,10 @@ var ErrorRoute = function (_React$Component3) {
       delete props.component;
       return props;
     }
-  }, {
-    key: 'render',
-    value: function render() {
-      if (this.state.shouldShow) {
-        return _react2.default.createElement(this.props.component, this.getComponentProps());
-      } else {
-        return _react2.default.createElement('div', null);
-      }
-    }
   }]);
 
   return ErrorRoute;
-}(_react2.default.Component);
+}(Route);
 
 ErrorRoute.propTypes = {
   component: _propTypes2.default.any.isRequired
