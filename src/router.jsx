@@ -13,19 +13,28 @@ class Router extends React.Component {
   }
 
   componentWillMount() {
-    window.addEventListener("hashchange", this.handleHashChange.bind(this), false);
+    window.addEventListener('hashchange', this.handleHashChange.bind(this), false);
+    RouterEmitter.on('pagefound', this.handlePageFound.bind(this));
   }
 
   componentWillUnmount() {
-    window.removeEventListener("hashchange", this.handleHashChange.bind(this));
+    window.removeEventListener('hashchange', this.handleHashChange.bind(this));
+    RouterEmitter.removeListener('pagefound', this.handlePageFound.bind(this));
+  }
+
+  handlePageFound() {
+    this.pageFound = true;
   }
 
   handleHashChange() {
     let hash = this.getHash();
+
     this.setState({
       activeHash: hash
     }, () => {
+      this.pageFound = false;
       RouterEmitter.emit('pagechanged', hash);
+      RouterEmitter.emit('shouldshowerror', !this.pageFound);
     });
   }
 

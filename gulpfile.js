@@ -4,7 +4,7 @@ const del = require('del');
 const babel = require('gulp-babel');
 
 gulp.task('concat', () => {
-  return gulp.src(['src/global.jsx', 'src/router.jsx', 'src/route.jsx'])
+  return gulp.src(['src/global.jsx', 'src/router.jsx', 'src/route.jsx', 'src/errorRoute.jsx'])
     .pipe(concat('all.jsx'))
     .pipe(gulp.dest('.'));
 });

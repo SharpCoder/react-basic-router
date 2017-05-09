@@ -1,4 +1,4 @@
-class Route extends React.Component {
+class ErrorRoute extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -7,19 +7,14 @@ class Route extends React.Component {
   }
 
   componentDidMount() {
-    RouterEmitter.on('pagechanged', this.handlePageChange.bind(this));
+    RouterEmitter.on('shouldshowerror', this.handleShouldShowError.bind(this));
   }
 
   componentWillUnmount() {
-    RouterEmitter.removeListener('pagechanged', this.handlePageChange.bind(this));
+    RouterEmitter.removeListener('shouldshowerror', this.handleShouldShowError.bind(this));
   }
 
-  handlePageChange(hash) {
-    let show = hash == this.props.hash;
-    if (show) {
-      RouterEmitter.emit("pagefound");
-    }
-
+  handleShouldShowError(show) {
     this.setState({
       shouldShow: show
     });
@@ -27,7 +22,6 @@ class Route extends React.Component {
 
   getComponentProps() {
     let props = Object.assign({}, this.props);
-    delete props.hash;
     delete props.component;
     return props;
   }
@@ -41,9 +35,8 @@ class Route extends React.Component {
   }
 }
 
-Route.propTypes = {
-  hash: PropTypes.string.isRequired,
+ErrorRoute.propTypes = {
   component: PropTypes.any.isRequired
 };
 
-exports.Route = Route;
+exports.ErrorRoute = ErrorRoute;
