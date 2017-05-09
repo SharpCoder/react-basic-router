@@ -1,6 +1,6 @@
 {
   "name": "react-basic-router",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A basic react router that uses hash state for navigation.",
   "main": "index.js",
   "scripts": {
@@ -14,6 +14,10 @@
     "routing",
     "hash"
   ],
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/SharpCoder/react-basic-router.git"
+  },
   "author": "sharpcoder",
   "license": "MIT",
   "dependencies": {
