@@ -129,7 +129,6 @@ var Route = function (_React$Component2) {
         hash = hash.substr(0, hash.indexOf('?'));
       }
 
-      console.log(isAbsolute, hash);
       return hash;
     }
   }, {
