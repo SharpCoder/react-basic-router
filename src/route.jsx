@@ -25,7 +25,6 @@ class Route extends React.Component {
       hash = hash.substr(0, hash.indexOf('?'));
     }
 
-    console.log(isAbsolute, hash);
     return hash;
   }
 
