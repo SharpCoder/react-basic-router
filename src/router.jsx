@@ -4,6 +4,28 @@
 */
 class Router extends React.Component {
 
+  constructor() {
+    super();
+    this._isMounted = false;
+
+    this.handleHashChange = () => {
+      if (this._isMounted) {
+        let hash = this.getHash();
+        this.setState({
+          activeHash: hash
+        }, () => {
+          this.pageFound = false;
+          RouterEmitter.emit('pagechanged', hash);
+          RouterEmitter.emit('shouldshowerror', !this.pageFound);
+        });
+      }
+    };
+
+    this.handlePageFound = () => {
+      this.pageFound = true;
+    };
+  }
+
   getHash() {
     return window.location.hash;
   }
@@ -13,33 +35,21 @@ class Router extends React.Component {
   }
 
   componentWillMount() {
-    window.addEventListener('hashchange', this.handleHashChange.bind(this), false);
-    RouterEmitter.on('pagefound', this.handlePageFound.bind(this));
+    window.addEventListener('hashchange', this.handleHashChange);
+    RouterEmitter.on('pagefound', this.handlePageFound);
+    this._isMounted = true;
   }
 
   componentWillUnmount() {
-    window.removeEventListener('hashchange', this.handleHashChange.bind(this));
-    RouterEmitter.removeListener('pagefound', this.handlePageFound.bind(this));
-  }
-
-  handlePageFound() {
-    this.pageFound = true;
-  }
-
-  handleHashChange() {
-    let hash = this.getHash();
-
-    this.setState({
-      activeHash: hash
-    }, () => {
-      this.pageFound = false;
-      RouterEmitter.emit('pagechanged', hash);
-      RouterEmitter.emit('shouldshowerror', !this.pageFound);
-    });
+    this._isMounted = false;
+    window.removeEventListener('hashchange', this.handleHashChange);
+    RouterEmitter.removeListener('pagefound', this.handlePageFound);
   }
 
   render() {
-    return(this.props.children);
+    return(<div>
+      {this.props.children}
+    </div>);
   }
 }
 

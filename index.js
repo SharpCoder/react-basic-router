@@ -35,7 +35,27 @@ var Router = function (_React$Component) {
   function Router() {
     _classCallCheck(this, Router);
 
-    return _possibleConstructorReturn(this, (Router.__proto__ || Object.getPrototypeOf(Router)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (Router.__proto__ || Object.getPrototypeOf(Router)).call(this));
+
+    _this._isMounted = false;
+
+    _this.handleHashChange = function () {
+      if (_this._isMounted) {
+        var hash = _this.getHash();
+        _this.setState({
+          activeHash: hash
+        }, function () {
+          _this.pageFound = false;
+          RouterEmitter.emit('pagechanged', hash);
+          RouterEmitter.emit('shouldshowerror', !_this.pageFound);
+        });
+      }
+    };
+
+    _this.handlePageFound = function () {
+      _this.pageFound = true;
+    };
+    return _this;
   }
 
   _createClass(Router, [{
@@ -51,39 +71,25 @@ var Router = function (_React$Component) {
   }, {
     key: 'componentWillMount',
     value: function componentWillMount() {
-      window.addEventListener('hashchange', this.handleHashChange.bind(this), false);
-      RouterEmitter.on('pagefound', this.handlePageFound.bind(this));
+      window.addEventListener('hashchange', this.handleHashChange);
+      RouterEmitter.on('pagefound', this.handlePageFound);
+      this._isMounted = true;
     }
   }, {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
-      window.removeEventListener('hashchange', this.handleHashChange.bind(this));
-      RouterEmitter.removeListener('pagefound', this.handlePageFound.bind(this));
-    }
-  }, {
-    key: 'handlePageFound',
-    value: function handlePageFound() {
-      this.pageFound = true;
-    }
-  }, {
-    key: 'handleHashChange',
-    value: function handleHashChange() {
-      var _this2 = this;
-
-      var hash = this.getHash();
-
-      this.setState({
-        activeHash: hash
-      }, function () {
-        _this2.pageFound = false;
-        RouterEmitter.emit('pagechanged', hash);
-        RouterEmitter.emit('shouldshowerror', !_this2.pageFound);
-      });
+      this._isMounted = false;
+      window.removeEventListener('hashchange', this.handleHashChange);
+      RouterEmitter.removeListener('pagefound', this.handlePageFound);
     }
   }, {
     key: 'render',
     value: function render() {
-      return this.props.children;
+      return _react2.default.createElement(
+        'div',
+        null,
+        this.props.children
+      );
     }
   }]);
 
@@ -98,23 +104,43 @@ var Route = function (_React$Component2) {
   function Route() {
     _classCallCheck(this, Route);
 
-    var _this3 = _possibleConstructorReturn(this, (Route.__proto__ || Object.getPrototypeOf(Route)).call(this));
+    // Handle page change as variable instead of method so we can
+    // bind and unbind it properly to the emitter.
+    var _this2 = _possibleConstructorReturn(this, (Route.__proto__ || Object.getPrototypeOf(Route)).call(this));
 
-    _this3.state = {
+    _this2.handlePageChange = function (hash) {
+      if (_this2._isMounted) {
+        var show = _this2.getBaseHash(hash) == _this2.getBaseHash(_this2.props.hash);
+        if (show) {
+          RouterEmitter.emit("pagefound");
+        }
+
+        if (_this2.state.shouldShow !== show) {
+          _this2.setState({
+            shouldShow: show
+          });
+        }
+      }
+    };
+
+    _this2._isMounted = false;
+    _this2.state = {
       shouldShow: false
     };
-    return _this3;
+    return _this2;
   }
 
   _createClass(Route, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      RouterEmitter.on('pagechanged', this.handlePageChange.bind(this));
+      RouterEmitter.on('pagechanged', this.handlePageChange);
+      this._isMounted = true;
     }
   }, {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
-      RouterEmitter.removeListener('pagechanged', this.handlePageChange.bind(this));
+      this._isMounted = false;
+      RouterEmitter.removeListener('pagechanged', this.handlePageChange);
     }
   }, {
     key: 'getBaseHash',
@@ -130,18 +156,6 @@ var Route = function (_React$Component2) {
       }
 
       return hash;
-    }
-  }, {
-    key: 'handlePageChange',
-    value: function handlePageChange(hash) {
-      var show = this.getBaseHash(hash) == this.getBaseHash(this.props.hash);
-      if (show) {
-        RouterEmitter.emit("pagefound");
-      }
-
-      this.setState({
-        shouldShow: show
-      });
     }
   }, {
     key: 'getComponentProps',
@@ -179,25 +193,29 @@ var ErrorRoute = function (_Route) {
   function ErrorRoute() {
     _classCallCheck(this, ErrorRoute);
 
-    return _possibleConstructorReturn(this, (ErrorRoute.__proto__ || Object.getPrototypeOf(ErrorRoute)).apply(this, arguments));
+    var _this3 = _possibleConstructorReturn(this, (ErrorRoute.__proto__ || Object.getPrototypeOf(ErrorRoute)).call(this));
+
+    _this3.handleShouldShowError = function (show) {
+      if (_this3._isMounted) {
+        _this3.setState({
+          shouldShow: show
+        });
+      }
+    };
+    return _this3;
   }
 
   _createClass(ErrorRoute, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
       RouterEmitter.on('shouldshowerror', this.handleShouldShowError.bind(this));
+      this._isMounted = true;
     }
   }, {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
+      this._isMounted = false;
       RouterEmitter.removeListener('shouldshowerror', this.handleShouldShowError.bind(this));
-    }
-  }, {
-    key: 'handleShouldShowError',
-    value: function handleShouldShowError(show) {
-      this.setState({
-        shouldShow: show
-      });
     }
   }, {
     key: 'getComponentProps',

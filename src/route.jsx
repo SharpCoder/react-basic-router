@@ -1,17 +1,41 @@
+
+
 class Route extends React.Component {
   constructor() {
     super();
+
+    // Handle page change as variable instead of method so we can
+    // bind and unbind it properly to the emitter.
+    this.handlePageChange = (hash) => {
+      if (this._isMounted) {
+        let show = this.getBaseHash(hash) == this.getBaseHash(this.props.hash);
+        if (show) {
+          RouterEmitter.emit("pagefound");
+        }
+
+        if (this.state.shouldShow !== show) {
+          this.setState({
+            shouldShow: show
+          });
+
+        }
+      }
+    };
+
+    this._isMounted = false;
     this.state = {
       shouldShow: false
     }
   }
 
   componentDidMount() {
-    RouterEmitter.on('pagechanged', this.handlePageChange.bind(this));
+    RouterEmitter.on('pagechanged', this.handlePageChange);
+    this._isMounted = true;
   }
 
   componentWillUnmount() {
-    RouterEmitter.removeListener('pagechanged', this.handlePageChange.bind(this));
+    this._isMounted = false;
+    RouterEmitter.removeListener('pagechanged', this.handlePageChange);
   }
 
   getBaseHash(hash) {
@@ -26,17 +50,6 @@ class Route extends React.Component {
     }
 
     return hash;
-  }
-
-  handlePageChange(hash) {
-    let show = this.getBaseHash(hash) == this.getBaseHash(this.props.hash);
-    if (show) {
-      RouterEmitter.emit("pagefound");
-    }
-
-    this.setState({
-      shouldShow: show
-    });
   }
 
   getComponentProps() {
