@@ -2,10 +2,11 @@ language: node_js
 node_js:
   - "7"
 install:
-  - npm install -g babel-cli
-  - npm install -g gulp
+  - npm install -g babel-cli gulp
   - npm install
 script:
   - npm run coveralls
 deploy:
+  provider: script
+  script: gulp
   skip_cleanup: true
