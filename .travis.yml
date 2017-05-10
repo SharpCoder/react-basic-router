@@ -1,8 +1,8 @@
 language: node_js
 node_js:
   - "7"
-before_script:
+script:
   - npm install -g gulp babel babel-cli
-script: gulp
+  - gulp
 deploy:
   skip_cleanup: true
