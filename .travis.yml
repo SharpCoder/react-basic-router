@@ -6,6 +6,6 @@ install:
   - npm install -g gulp
   - npm install
 script:
-  - gulp
+  - npm run coveralls
 deploy:
   skip_cleanup: true
