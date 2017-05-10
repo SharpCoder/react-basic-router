@@ -2,7 +2,7 @@ language: node_js
 node_js:
   - "7"
 before_script:
-  - npm install -g gulp babel istanbul coveralls
+  - npm install -g gulp babel-cli istanbul coveralls
 script: gulp
 deploy:
   skip_cleanup: true
