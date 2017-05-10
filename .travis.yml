@@ -5,6 +5,7 @@ install:
   - npm install -g babel-cli gulp
   - npm install
 script:
+  - gulp
   - npm run cover
 deploy:
   provider: script
