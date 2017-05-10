@@ -4,8 +4,7 @@ node_js:
 install:
   - npm install -g babel-cli gulp
   - npm install
-script: npm run coverage
-deploy:
-  provider: script
-  script: gulp
-  skip_cleanup: true
+script:
+  - npm run cover
+  - npm run coveralls
+deploy: true

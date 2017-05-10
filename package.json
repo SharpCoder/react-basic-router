@@ -8,7 +8,7 @@
     "prepublish": "npm run build; npm run test",
     "test": "babel-node ./node_modules/istanbul/lib/cli cover ./node_modules/mocha/bin/_mocha -- --require index.js",
     "cover": "babel-node ./node_modules/istanbul/lib/cli cover ./node_modules/mocha/bin/_mocha -- --require index.js",
-    "coverage": "npm run test -- && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
+    "coveralls": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
   },
   "keywords": [
     "react",
