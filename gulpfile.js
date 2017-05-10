@@ -5,12 +5,12 @@ const babel = require('gulp-babel');
 
 gulp.task('concat', () => {
   return gulp.src(['src/global.jsx', 'src/router.jsx', 'src/route.jsx', 'src/errorRoute.jsx'])
-    .pipe(concat('all.jsx'))
+    .pipe(concat('testfile.jsx'))
     .pipe(gulp.dest('.'));
 });
 
 gulp.task('compile', ['concat'], () => {
-  return gulp.src('all.jsx')
+  return gulp.src('testfile.jsx')
     .pipe(babel({
       presets: [ 'es2015', 'react' ]
     }))
@@ -19,7 +19,7 @@ gulp.task('compile', ['concat'], () => {
 });
 
 gulp.task('clean', ['compile', 'concat'], () => {
-  return del(['all.jsx']);
+  // return del(['all.jsx']);
 });
 
-gulp.task('default', ['clean']);//['concat', 'compile', 'clean']);
+gulp.task('default', ['clean']);

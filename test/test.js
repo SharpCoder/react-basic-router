@@ -1,9 +1,6 @@
 import chai, {expect} from 'chai';
 import jsdomify from 'jsdomify';
 import { mount, shallow, render } from 'enzyme';
-import { Router, Route, ErrorRoute } from '../index.js';
-
-const sinon = require('sinon');
 
 chai.should();
 let React;
@@ -17,7 +14,7 @@ describe('component', function() {
   before(() => {
     jsdomify.create();
     React = require('react');
-    r = require('../index.js');
+    r = require('../testfile.jsx');
     require('fbjs/lib/ExecutionEnvironment').canUseDOM = true
 
     class PageA extends React.Component {
