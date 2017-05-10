@@ -1,5 +1,5 @@
 # React Basic Router
-[![Coverage Status](https://coveralls.io/repos/github/SharpCoder/react-basic-router/badge.svg?branch=master)](https://coveralls.io/github/SharpCoder/react-basic-router?branch=master)
+[![Build Status](https://travis-ci.org/SharpCoder/react-basic-router.svg?branch=master)](https://travis-ci.org/SharpCoder/react-basic-router) [![Coverage Status](https://coveralls.io/repos/github/SharpCoder/react-basic-router/badge.svg?branch=master)](https://coveralls.io/github/SharpCoder/react-basic-router?branch=master)
 
 A fast and minimal view router written in react which responds to hash navigation.
 
