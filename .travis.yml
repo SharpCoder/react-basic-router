@@ -6,5 +6,7 @@ install:
   - npm install
 script:
   - npm run cover
-  - npm run coveralls
-deploy: true
+deploy:
+  provider: script
+  script: npm run coveralls
+  skip_cleanup: true
