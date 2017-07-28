@@ -57,7 +57,7 @@ class Router extends React.Component {
   }
 
   render() {
-    return(<div>
+    return(<div className={this.props.className}>
       {this.props.children}
     </div>);
   }

@@ -87,7 +87,7 @@ var Router = function (_React$Component) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        null,
+        { className: this.props.className },
         this.props.children
       );
     }
