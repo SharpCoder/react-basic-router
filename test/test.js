@@ -1,6 +1,15 @@
 import chai, {expect} from 'chai';
 import jsdomify from 'jsdomify';
-import { mount, shallow, render } from 'enzyme';
+import Enzyme from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+
+Enzyme.configure({
+  adapter: new Adapter()
+});
+
+const mount = Enzyme.mount;
+const shallow = Enzyme.shallow;
+const render = Enzyme.render;
 
 chai.should();
 let React;
