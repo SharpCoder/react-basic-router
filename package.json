@@ -1,6 +1,6 @@
 {
   "name": "react-basic-router",
-  "version": "1.0.4",
+  "version": "2.0.0",
   "description": "A basic react router that uses hash state for navigation.",
   "main": "index.js",
   "scripts": {
